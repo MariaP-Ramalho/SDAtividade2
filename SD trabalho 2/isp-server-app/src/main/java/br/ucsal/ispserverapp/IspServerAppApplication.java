@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class IspServerAppApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(IspServerAppApplication.class, args);
 	}
 
