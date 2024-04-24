@@ -23,7 +23,7 @@ public class EurekaServerController {
     @GetMapping("/health")
     public String healthy() {
 
-        return "Sou o Eureka Server e estou online!" + LocalDateTime.now();
+        return "Eureka server rodando";
     }
 
     @GetMapping("/listApplications")
