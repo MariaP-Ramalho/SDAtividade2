@@ -1,0 +1,15 @@
+# application.yml
+
+server:
+  port: 8761 # or your preferred port
+
+spring:
+  application:
+    name: eureka-server-app
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    register-with-eureka: false
+    fetch-registry: false
