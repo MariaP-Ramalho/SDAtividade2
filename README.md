@@ -59,11 +59,19 @@ GET
 http://localhost:8181/health
 ```
 
-?? probleminha aqui type=Method Not Allowed, status=405
-GET 
+POST 
 ```
-http://localhost:8181/perfil
+http://localhost:8181/perfil/
 ```
+FromBody
+```
+{
+  email : "some@email.com"
+}
+```
+
+<img src="https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/bbc27a81-677e-448b-b7e7-6ff710858114"></img>
+
 
 # validacao-app
 
@@ -72,10 +80,17 @@ GET
 http://localhost:8182/health
 ```
 
-?? probleminha aqui type=Method Not Allowed, status=405
 POST 
 ```
 http://localhost:8182/validacao
 ```
+FromBody
+```
+{
+  email : "some@email.com"
+}
+```
+
+<img src="https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/a6986a62-c59f-4e17-bd02-6d7bc60ea6b9"></img>
 
 </div>
