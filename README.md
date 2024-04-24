@@ -8,7 +8,7 @@ mvn spring-boot:run
 
 # dns-server-app
 ```
-localhost:8081/health
+http://localhost:8081/health
 ```
 
 # eureka-server-app
