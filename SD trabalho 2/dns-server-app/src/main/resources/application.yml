@@ -1,0 +1,15 @@
+# application.yml
+
+server:
+  port: 8081 # or your preferred port
+
+spring:
+  application:
+    name: dns-server-app
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    register-with-eureka: false
+    fetch-registry: false
