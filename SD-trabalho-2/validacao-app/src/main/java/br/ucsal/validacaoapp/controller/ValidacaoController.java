@@ -17,7 +17,7 @@ public class ValidacaoController {
 
     @GetMapping("/health")
     public String healthy() {
-        return "Validação Acessada";
+        return "Validação app rodando.";
     }
 
 }

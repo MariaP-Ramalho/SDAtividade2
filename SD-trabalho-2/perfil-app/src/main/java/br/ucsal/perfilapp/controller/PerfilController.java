@@ -11,6 +11,11 @@ import java.time.LocalDateTime;
 @RestController
 public class PerfilController {
 
+    @GetMapping("/health")
+    public String healthy() {
+        return "Perfil app rodando.";
+    }
+    
     @PostMapping("/perfil")
     public String healthy(@RequestBody String payload) {
         return "Perfil Acessado ";
