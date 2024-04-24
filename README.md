@@ -1,4 +1,11 @@
-# SDAtividade2
+<div align="center"> 
+ 
+ # SDAtividade2
+
+### Alunos
+Ana Carolina Armentano e Silva<br>
+Maria Eduarda<br>
+João Fábio 
 
 Executar o seguinte comando dentro da pasta de cada app: 
 
@@ -70,3 +77,5 @@ POST
 ```
 http://localhost:8182/validacao
 ```
+
+</div>
