@@ -30,7 +30,7 @@ http://localhost:8080/health
 Obtem a lista de aplicações ativas e retornar para o servidor ISP
 
 ```
-http://localhost:8081/health
+http://localhost:8081/getRegisteredApplications
 ```
 
 # `eureka-server-app`
@@ -41,23 +41,11 @@ http://localhost:8081/health
 http://localhost:8761
 ```
 
-?? probleminha aqui default zone (registered replica)
-tá dando unavailable
-
-```
- http://localhost:8761/eureka/
-```
-
 ## endpoints
 
 GET
 ```
 http://localhost:8761/health
-```
-
-?? probleminha aqui GET
-```
-http://localhost:8761/listApplications
 ```
 
 # `perfil-app`
