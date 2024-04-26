@@ -67,9 +67,9 @@ GET
 http://localhost:8181/health
 ```
 
-POST 
+POST - ACESSADO VIA ISP SERVER
 ```
-http://localhost:8181/perfil/
+http://localhost:8080/perfil
 ```
 FromBody
 ```
@@ -88,9 +88,9 @@ GET
 http://localhost:8182/health
 ```
 
-POST 
+POST - ACESSADO VIA ISP SERVER
 ```
-http://localhost:8182/validacao
+http://localhost:8080/validacao
 ```
 FromBody
 ```
