@@ -1,64 +1,73 @@
 package br.ucsal.ispserverapp.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.ucsal.ispserverapp.viewmodels.ProfileRequestDTO;
+import br.ucsal.ispserverapp.viewmodels.ProfileResponseDTO;
 
 @RestController
 public class IspServerController {
 
-    @GetMapping("/health")
-    public String healthy() {
-        return "ISP server rodando";
+    private final RestTemplate restTemplate;
+    private final String registryUrl = "http://localhost:8081/getRegisteredApplications";
+
+    public IspServerController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
-    @Autowired
-    private ApplicationService applicationService;
+    @PostMapping("/perfil")
+    public ResponseEntity<?> handleProfileRequest(@RequestBody ProfileRequestDTO requestBody) throws JsonMappingException, JsonProcessingException {
+        var responseJson = restTemplate.getForObject(registryUrl, String.class);
 
-    @GetMapping("/validacao")
-    public String validacao() {
+        if (responseJson == null || responseJson.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Registry response is empty");
+        }
 
-        // PUXAR AQUI AS APLICAÇÕES DO DNS-SERVER E TRANSFORMAR NUM LIST
+        var instanceUrl = findInstanceUrl(responseJson, "PERFIL-APP");
 
-        // Get applications from service discovery
-        List<Application> applications = new ArrayList<Application>();
+        if (instanceUrl == null || instanceUrl.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("PERFIL-APP instance URL not found");
+        }
 
-        // Find the VALIDACAO-APP instance
-        String instanceUrl = findInstanceUrl(applications, "VALIDACAO-APP");
+        instanceUrl += "/perfil"; 
+        System.out.println("[REDIRECTING] to target URL: " + instanceUrl);
 
-        // Forward request to the instance
-        return "Forwarding request to: " + instanceUrl;
+        ProfileResponseDTO responseEntity = restTemplate.postForObject(instanceUrl, requestBody, ProfileResponseDTO.class);
+        return ResponseEntity.ok(responseEntity);
     }
 
-    @GetMapping("/perfil")
-    public String perfil() {
-        // PUXAR AQUI AS APLICAÇÕES DO DNS-SERVER E TRANSFORMAR NUM LIST
+    private String findInstanceUrl(String responseJson, String appName) throws JsonMappingException, JsonProcessingException {
+            
+            var mapper = new ObjectMapper();
+            var rootNode = mapper.readTree(responseJson);
+            var applicationsNode = rootNode.path("applications").path("application");
 
-        // Get applications from service discovery
-        List<Application> applications = new ArrayList<Application>();
+            for (JsonNode applicationNode : applicationsNode) {
+                var name = applicationNode.path("name").asText();
 
-        // Find the PERFIL-APP instance
-        String instanceUrl = findInstanceUrl(applications, "PERFIL-APP");
+                if (name.equals(appName)) {
+                    var instanceNode = applicationNode.path("instance").get(0);
+                    var instanceUrl = instanceNode.path("homePageUrl").asText();
 
-        // Forward request to the instance
-        return "Forwarding request to: " + instanceUrl;
-    }
+                    if (!instanceUrl.startsWith("http://") && !instanceUrl.startsWith("https://")) {
+                        instanceUrl = "http://" + instanceUrl;
+                    }
 
-    private String findInstanceUrl(List<Application> applications, String appName) {
-        if (applications != null) {
-            for (Application app : applications) {
-                if (app.getName().equals(appName)) {
-                    //AJUSTAR AQUI PRA PEGAR CERTO A INSTÂNCIA
-                    return app.getInstance().get(0).toString(); 
+                    System.out.println("Resolved Instance URL: " + instanceUrl);
+                    return instanceUrl;
                 }
             }
-        }
-        return null;
+
+            throw new RuntimeException("[ERROR] Application not found: " + appName);
     }
-
-
-
 }
