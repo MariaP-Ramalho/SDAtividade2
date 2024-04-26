@@ -1,0 +1,18 @@
+package br.ucsal.ispserverapp;
+
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+@EnableWebMvc
+public class AppConfig {
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
+
+    @Bean
+    public RestTemplate getRestTemplate() {
+      return new RestTemplate();
+   }
+}
