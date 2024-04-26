@@ -66,7 +66,7 @@ FromBody
 }
 ```
 
-<img src="https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/bbc27a81-677e-448b-b7e7-6ff710858114"></img>
+<img src="https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/e825c329-92c2-43e9-9c17-b4a1e54fd8d4"></img>
 
 
 # `validacao-app`
