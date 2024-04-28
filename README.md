@@ -119,12 +119,12 @@ http://localhost:8761
 
 # Identificação de perfis na base de dados: `perfil-app` 📝
 
-O app fornece endpoints para verificar a saúde da aplicação e para processar solicitações de perfil de usuário. <br>
-Quando acessado via ISP Server usando um método POST e o endpoint `http://localhost:8080/perfil`, o perfil-app espera receber <br>
+O app fornece endpoints para verificar a saúde da aplicação e para processar solicitações de perfil de usuário.
+Quando acessado via ISP Server usando um método POST e o endpoint `http://localhost:8080/perfil`, o perfil-app espera receber
 um corpo de requisição contendo um email. 
 
-Com base nesse email, a aplicação busca o perfil associado na base de dados. Se encontrar o perfil correspondente, <br>
-retorna uma resposta com o email e o perfil do usuário, com o código de status HTTP 200 (Ok). Caso contrário, <br>
+Com base nesse email, a aplicação busca o perfil associado na base de dados. Se encontrar o perfil correspondente,
+retorna uma resposta com o email e o perfil do usuário, com o código de status HTTP 200 (Ok). Caso contrário,
 retorna uma resposta de erro indicando que o perfil não foi encontrado, junto com o código de status HTTP 404 (Not Found).
 
 ## **Saúde da aplicação** (GET)
