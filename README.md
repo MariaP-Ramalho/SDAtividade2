@@ -185,12 +185,12 @@ http://localhost:8181/perfil
 
 # Verificação de e-mail na base de dados: `validacao-app` 🧾
 
-Esse app oferece endpoints para verificar a saúde da aplicação e para validar a existência de um usuário na base de dados. <br>
-Ao acessar o endpoint `http://localhost:8080/validacao` via ISP Server usando o método POST, a aplicação espera receber um corpo <br>
+Esse app oferece endpoints para verificar a saúde da aplicação e para validar a existência de um usuário na base de dados.
+Ao acessar o endpoint `http://localhost:8080/validacao` via ISP Server usando o método POST, a aplicação espera receber um corpo
 de requisição contendo um email. 
 
-Com base nesse email, o validacao-app verifica se o usuário existe na base de dados. Se o usuário for encontrado, retorna <br>
-uma mensagem indicando que o email existe na base de dados, com o código de status HTTP 200 (Ok). Caso contrário, <br>
+Com base nesse email, o validacao-app verifica se o usuário existe na base de dados. Se o usuário for encontrado, retorna
+uma mensagem indicando que o email existe na base de dados, com o código de status HTTP 200 (Ok). Caso contrário,
 retorna uma resposta de erro indicando que o usuário não foi encontrado, novamente com o código de status HTTP 404 (Not Found).
 
 ## **Saúde da aplicação** (GET)
