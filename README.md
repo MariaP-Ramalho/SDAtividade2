@@ -37,9 +37,15 @@ aplicação de perfil (`perfil-app`) e retorna o resultado para o usuário.
 ```
 http://localhost:8080/perfil
 ```
+
+<div align="left">
+ 
 ```json
-{ "email" : "some@email.com" }
+{
+"email" : "some@email.com"
+}
 ```
+</div>
 
 ![endpoint-perfil-no-isp](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/44a82f41-076a-4e4b-8924-e75d6e706675)<br>
 ![log de redirect para app perfil no isp](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/9fbcbcea-d5b2-450b-818a-42849ac21e4e)
@@ -52,9 +58,15 @@ aplicação de validação (`validacao-app`) e retorna o resultado para o usuár
 ```
 http://localhost:8080/validacao
 ```
+
+<div align="left">
+ 
 ```json
-{ "email" : "some@email.com" }
+{
+"email" : "some@email.com"
+}
 ```
+</div>
 
 ![endpoint-validacao-no-isp](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/f190dab4-456f-4f67-b1ad-cbcba5fb39da)<br>
 ![log de redirect para app validacao no isp](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/d8a07866-04f2-4fe6-909a-73b222b0f03e)
@@ -76,66 +88,144 @@ solicitações para as instâncias corretas de uma determinada aplicação com b
 http://localhost:8081/getRegisteredApplications
 ```
 
+![dns-servidor-de-nomes](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/1154d2a7-33d2-4726-9a2b-cce1b7085159)
+
 ---
 
-# `eureka-server-app`
+# Servidor Eureka: `eureka-server-app` 📊
 
-## dashboard 
+O servidor Eureka (`eureka-server-app`) é responsável por hospedar e manter um registro dinâmico <br>
+de todas as instâncias de serviços disponíveis em um ambiente distribuído. Funciona como um diretório <br>
+centralizado onde as aplicações registram suas instâncias conforme são iniciadas e retiradas de serviço. 
 
+O dashboard, acessível através do endpoint `http://localhost:8761`, fornece uma interface gráfica para <br>
+visualizar o status das aplicações registradas, suas instâncias e estatísticas de tráfego. Isso permite monitorar<br>
+o funcionamento do sistema e identificar problemas de forma eficiente, além de facilitar a descoberta de serviços por parte de outras aplicações. 
+
+## **Dashboard** (GET)
 ```
 http://localhost:8761
 ```
 
-## endpoints
-
-GET
-```
-http://localhost:8761/health
-```
+![eureka-dashboard](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/7044d04e-dd50-4b03-8455-a9d9b74db9bf)
 
 ---
 
-# `perfil-app`
+# Identificação de perfis na base de dados: `perfil-app` 📝
 
-GET 
+O app fornece endpoints para verificar a saúde da aplicação e para processar solicitações de perfil de usuário. <br>
+Quando acessado via ISP Server usando um método POST e o endpoint `http://localhost:8080/perfil`, o perfil-app espera receber <br>
+um corpo de requisição contendo um email. 
+
+Com base nesse email, a aplicação busca o perfil associado na base de dados. Se encontrar o perfil correspondente, <br>
+retorna uma resposta com o email e o perfil do usuário, com o código de status HTTP 200 (Ok). Caso contrário, <br>
+retorna uma resposta de erro indicando que o perfil não foi encontrado, junto com o código de status HTTP 404 (Not Found).
+
+## **Saúde da aplicação** (GET)
 ```
 http://localhost:8181/health
 ```
+## **Rota de perfil** (POST)
 
-POST - ACESSADO VIA ISP SERVER
 ```
-http://localhost:8080/perfil
+http://localhost:8181/perfil
 ```
-FromBody
-```
+
+<div align="left">
+ 
+```json
 {
-  email : "some@email.com"
+"email" : "some@email.com"
+}
+```
+</div>
+
+### **Retornos possíveis**
+
+<div align="left">
+ 
+```json
+{
+    "error": {
+        "errorMessage": "Perfil não encontrado para o email: joana@ucsal.edu.br",
+        "statusCode": 404
+    }
 }
 ```
 
-<img src="https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/e825c329-92c2-43e9-9c17-b4a1e54fd8d4"></img>
+```json
+{
+    "email": "carolina@ucsal.edu.br",
+    "perfil": "Aluno"
+}
+```
+
+```json
+{
+    "email": "jose@ucsal.edu.br",
+    "perfil": "Funcionario"
+}
+```
+
+```json
+{
+    "email": "everton@pro.ucsal.br",
+    "perfil": "Professor"
+}
+```
+</div>
 
 ---
 
-# `validacao-app`
+# Verificação de e-mail na base de dados: `validacao-app` 🧾
 
-GET
+Esse app oferece endpoints para verificar a saúde da aplicação e para validar a existência de um usuário na base de dados. <br>
+Ao acessar o endpoint `http://localhost:8080/validacao` via ISP Server usando o método POST, a aplicação espera receber um corpo <br>
+de requisição contendo um email. 
+
+Com base nesse email, o validacao-app verifica se o usuário existe na base de dados. Se o usuário for encontrado, retorna <br>
+uma mensagem indicando que o email existe na base de dados, com o código de status HTTP 200 (Ok). Caso contrário, <br>
+retorna uma resposta de erro indicando que o usuário não foi encontrado, novamente com o código de status HTTP 404 (Not Found).
+
+## **Saúde da aplicação** (GET)
 ```
 http://localhost:8182/health
 ```
+## **Rota de validação** (POST)
 
-POST - ACESSADO VIA ISP SERVER
 ```
-http://localhost:8080/validacao
+http://localhost:8182/validacao
 ```
-FromBody
-```
+
+<div align="left">
+ 
+```json
 {
-  email : "some@email.com"
+"email" : "some@email.com"
+}
+```
+</div>
+
+### **Retornos possíveis**
+
+<div align="left">
+ 
+```json
+{
+    "error": {
+        "errorMessage": "Usuário não encontrado para o email: joaquim@ucsal.edu.br",
+        "statusCode": 404
+    }
 }
 ```
 
-<img src="https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/a6986a62-c59f-4e17-bd02-6d7bc60ea6b9"></img>
+```json
+{
+    "message": "E-mail do usuário maria@ucsal.edu.br existe na base de dados."
+}
+
+```
+</div>
 
 ---
 
