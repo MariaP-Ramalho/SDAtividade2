@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-
 @ComponentScan(basePackages = {"br.ucsal.validacaoapp"})
 public class ValidacaoAppApplication {
 

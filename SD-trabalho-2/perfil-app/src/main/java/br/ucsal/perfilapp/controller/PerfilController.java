@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ucsal.perfilapp.services.IProfileService;
 import br.ucsal.perfilapp.viewmodels.NotFoundResponseDTO;
 import br.ucsal.perfilapp.viewmodels.ProfileRequestDTO;
-import br.ucsal.perfilapp.viewmodels.ProfileResponseDTO;
 
 @RestController
 public class PerfilController {
