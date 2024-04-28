@@ -4,6 +4,10 @@ public class ValidacaoResponseDTO {
 
     private String message;
 
+    public ValidacaoResponseDTO() {
+        super();
+    }
+
     public ValidacaoResponseDTO(String message) {
         this.message = message;
     }

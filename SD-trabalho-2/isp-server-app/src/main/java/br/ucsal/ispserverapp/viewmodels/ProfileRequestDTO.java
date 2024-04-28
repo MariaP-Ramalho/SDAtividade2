@@ -4,6 +4,10 @@ public class ProfileRequestDTO {
 
     private String email;
 
+    public ProfileRequestDTO() {
+        super();
+    }
+
     public String getEmail() {
         return email;
     }
