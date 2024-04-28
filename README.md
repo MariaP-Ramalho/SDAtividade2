@@ -1,12 +1,18 @@
 <div align="center">
 
  # Sistemas Distribuídos com Eureka, DNS e ISP servers 
- ### Recuperação e validação de perfis de usuário
+
+Este projeto abrange uma variedade de aplicativos que servem como exemplos práticos para explorar e compreender <br>
+os fundamentos do desenvolvimento de sistemas distribuídos. Através da utilização de tecnologias-chave como Eureka Server,<br>
+Spring Boot e Maven, o projeto visa demonstrar como criar, implantar e gerenciar aplicações distribuídas de forma eficiente. 
+
+Além disso, a integração de componentes como DNS (Domain Name System), ISP (Intelligent Service Proxy) e API Rest enriquece <br>
+a experiência, permitindo a exploração de conceitos essenciais, como descoberta de serviços, roteamento inteligente de solicitações<br>
+e comunicação entre componentes distribuídos para validação e recuperação de perfis de usuário.
 
 <br>![Diagram](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/bb011d01-d703-4110-91c2-93bf90f3f621)
 <!--Excalidraw: https://excalidraw.com/#json=9Dvb07mGXfhT5CZpdBmfs,jOlULBawkJB7Sm9nGcRFAQ-->
 
-Este é um projeto que contém vários aplicativos para demonstrar conceitos de desenvolvimento de <br>sistemas distribuídos utilizando Eureka Server, Spring Boot, Maven, DNS, ISP e API Rest.
 
 --- 
 
