@@ -4,6 +4,10 @@ public class ValidacaoRequestDTO {
 
     private String email;
 
+    public ValidacaoRequestDTO() {
+        super();
+    }
+
     public String getEmail() {
         return email;
     }

@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ucsal.ispserverapp.viewmodels.ProfileRequestDTO;
 import br.ucsal.ispserverapp.viewmodels.ProfileResponseDTO;
+import br.ucsal.ispserverapp.viewmodels.ValidacaoRequestDTO;
+import br.ucsal.ispserverapp.viewmodels.ValidacaoResponseDTO;
 
 @RestController
 public class IspServerController {
@@ -39,7 +41,7 @@ public class IspServerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("PERFIL-APP instance URL not found");
         }
 
-        instanceUrl += "/perfil"; 
+        instanceUrl += "perfil"; 
         System.out.println("[REDIRECTING] to target URL: " + instanceUrl);
 
         ProfileResponseDTO responseEntity = restTemplate.postForObject(instanceUrl, requestBody, ProfileResponseDTO.class);
@@ -47,7 +49,7 @@ public class IspServerController {
     }
 
     @PostMapping("/validacao")
-public ResponseEntity<?> handleValidationRequest(@RequestBody ProfileRequestDTO requestBody) throws JsonMappingException, JsonProcessingException {
+public ResponseEntity<?> handleValidationRequest(@RequestBody ValidacaoRequestDTO requestBody) throws JsonMappingException, JsonProcessingException {
     var responseJson = restTemplate.getForObject(registryUrl, String.class);
 
     if (responseJson == null || responseJson.isEmpty()) {
@@ -60,10 +62,10 @@ public ResponseEntity<?> handleValidationRequest(@RequestBody ProfileRequestDTO 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("VALIDACAO-APP instance URL not found");
     }
 
-    instanceUrl += "/validacao"; 
+    instanceUrl += "validacao"; 
     System.out.println("[REDIRECTING] to target URL: " + instanceUrl);
 
-    ProfileResponseDTO responseEntity = restTemplate.postForObject(instanceUrl, requestBody, ProfileResponseDTO.class);
+    ValidacaoResponseDTO responseEntity = restTemplate.postForObject(instanceUrl, requestBody, ValidacaoResponseDTO.class);
     return ResponseEntity.ok(responseEntity);
 }
 
@@ -84,7 +86,7 @@ public ResponseEntity<?> handleValidationRequest(@RequestBody ProfileRequestDTO 
                         instanceUrl = "http://" + instanceUrl;
                     }
 
-                    System.out.println("Resolved Instance URL: " + instanceUrl);
+                    //System.out.println("Resolved Instance URL: " + instanceUrl);
                     return instanceUrl;
                 }
             }

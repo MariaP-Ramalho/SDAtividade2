@@ -2,12 +2,8 @@ package br.ucsal.perfilapp.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ucsal.perfilapp.viewmodels.ProfileResponseDTO;
 

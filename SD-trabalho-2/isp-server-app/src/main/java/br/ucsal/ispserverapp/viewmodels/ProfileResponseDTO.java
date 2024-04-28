@@ -5,6 +5,10 @@ public class ProfileResponseDTO {
     private String email;
     private String perfil;
 
+    public ProfileResponseDTO() {
+        super();
+    }
+
     public ProfileResponseDTO(String email, String perfil) {
         this.email = email;
         this.perfil = perfil;
