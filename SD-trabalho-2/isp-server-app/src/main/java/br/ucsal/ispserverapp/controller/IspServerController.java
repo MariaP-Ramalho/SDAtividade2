@@ -46,6 +46,27 @@ public class IspServerController {
         return ResponseEntity.ok(responseEntity);
     }
 
+    @PostMapping("/validacao")
+public ResponseEntity<?> handleValidationRequest(@RequestBody ProfileRequestDTO requestBody) throws JsonMappingException, JsonProcessingException {
+    var responseJson = restTemplate.getForObject(registryUrl, String.class);
+
+    if (responseJson == null || responseJson.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Registry response is empty");
+    }
+
+    var instanceUrl = findInstanceUrl(responseJson, "VALIDACAO-APP");
+
+    if (instanceUrl == null || instanceUrl.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("VALIDACAO-APP instance URL not found");
+    }
+
+    instanceUrl += "/validacao"; 
+    System.out.println("[REDIRECTING] to target URL: " + instanceUrl);
+
+    ProfileResponseDTO responseEntity = restTemplate.postForObject(instanceUrl, requestBody, ProfileResponseDTO.class);
+    return ResponseEntity.ok(responseEntity);
+}
+
     private String findInstanceUrl(String responseJson, String appName) throws JsonMappingException, JsonProcessingException {
             
             var mapper = new ObjectMapper();
