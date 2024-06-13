@@ -18,12 +18,10 @@ e comunicação entre componentes distribuídos para validação e recuperação
 
 # Como Executar 🧰
 
-Para cada aplicativo, acesse o diretório do projeto e, em seguida, inicie a execução <br>de uma aplicação dentro desse projeto, usando o Maven e o Spring Boot. Por exemplo: 
+Com o Rancher ou Docker Desktop abertos, abra o terminal na pasta raiz e execute:
 
 ```bash
-cd sd-trabalho-2
-cd dns-server-app
-mvn spring-boot:run
+docker-compose up --build
 ```
 
 ---

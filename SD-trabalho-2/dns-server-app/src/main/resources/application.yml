@@ -1,7 +1,5 @@
-# application.yml
-
 server:
-  port: 8081 # or your preferred port
+  port: 8081 
 
 spring:
   application:
