@@ -21,18 +21,13 @@ e comunicação entre componentes distribuídos para validação e recuperação
 Dentro de cada projeto, você deve compilar utilizando o comando:
 
 ```bash
-mvn package
+mvn clean package
 ```
 
 Com o Rancher ou Docker Desktop abertos, abra o terminal na pasta raiz e execute:
 
 ```bash
 docker-compose up --build
-```
-
-Para menos logs: 
-```bash
-docker-compose build -q
 ```
 
 ---
