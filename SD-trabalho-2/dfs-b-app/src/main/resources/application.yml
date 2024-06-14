@@ -1,0 +1,13 @@
+server:
+  port: 8185
+
+spring:
+  application:
+    name: dfs-b-app
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server-app:8761/eureka/ 
+  instance:
+    preferIpAddress: false 
