@@ -1,82 +1,80 @@
 services:
-
-  eureka-server:
-    container_name: eureka-server
+  eureka-server-app:
+    container_name: eureka-server-app
     build:
-      context: ./SD-trabalho-2/eureka-server-app
+      context: SD-trabalho-2/eureka-server-app
       dockerfile: Dockerfile
     ports:
       - "8761:8761"
     networks:
       - app-network
     environment:
-      eureka.instance.hostname: eureka-server
-      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      - spring.aplication.name=eureka-server-app
+      - eureka.client.registerWithEureka=false
+      - eureka.client.fetchRegistry=false
+      - eureka.server.waitTimeInMsWhenSyncEmpty=0
+
+  perfil-app:
+    container_name: perfil-app
+    build:
+      context: SD-trabalho-2/perfil-app
+      dockerfile: Dockerfile
+    ports:
+      - "8181:8181"
+    depends_on:
+      - eureka-server-app
+    networks:
+      - app-network
+    environment:
+    - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+
+  validacao-app:
+    container_name: validacao-app
+    build:
+      context: SD-trabalho-2/validacao-app
+      dockerfile: Dockerfile
+    ports:
+      - "8182:8182"
+    depends_on:
+      - eureka-server-app
+    networks:
+      - app-network
+    environment:
+    - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
 
   dns-server-app:
     container_name: dns-server-app
     build:
-      context: ./SD-trabalho-2/dns-server-app
+      context: SD-trabalho-2/dns-server-app
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
     networks:
       - app-network
     depends_on:
-      - eureka-server
+      - eureka-server-app
+      - perfil-app
+      - validacao-app
     environment:
-      server.port: 8081
-      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+    - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
 
   isp-server-app:
     container_name: isp-server-app
     build:
-      context: ./SD-trabalho-2/isp-server-app
+      context: SD-trabalho-2/isp-server-app
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     networks:
       - app-network
     depends_on:
-      - dns-server-app 
-    environment:
-      server.port: 8080
-      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
-
-  perfil-app:
-    container_name: perfil-app
-    build:
-      context: ./SD-trabalho-2/perfil-app
-      dockerfile: Dockerfile
-    ports:
-      - "8181:8181"
-    networks:
-      - app-network
-    depends_on:
-      - eureka-server
-      - isp-server-app
+      - eureka-server-app
       - dns-server-app
+      - perfil-app
+      - validacao-app
     environment:
-      server.port: 8181
-      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+    - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
 
-  validacao-app:
-    container_name: validacao-app
-    build:
-      context: ./SD-trabalho-2/validacao-app
-      dockerfile: Dockerfile
-    ports:
-      - "8182:8182"
-    networks:
-      - app-network
-    depends_on:
-      - eureka-server
-      - isp-server-app
-      - dns-server-app
-    environment:
-      server.port: 8182
-      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
-
-networks:
+networks: 
   app-network:
     driver: bridge

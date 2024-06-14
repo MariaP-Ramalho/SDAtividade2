@@ -4,7 +4,7 @@ server:
 spring:
   application:
     name: dns-server-app
-  service-discovery-app: http://localhost:8761/eureka/apps
+  service-discovery-app: http://eureka-server-app:8761/eureka/apps
 
 eureka:
   decoderName: JacksonJson

@@ -1,6 +1,5 @@
-FROM openjdk:17-jdk-alpine
-RUN apk add --no-cache maven
+FROM openjdk:17-jdk-slim
 WORKDIR /app
-COPY . /app
+COPY target/*.jar /app/dns-server-app.jar
 EXPOSE 8081
-CMD ["mvn", "spring-boot:run"]
+CMD ["java", "-jar", "dns-server-app.jar"]
