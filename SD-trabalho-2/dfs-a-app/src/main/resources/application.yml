@@ -1,0 +1,13 @@
+server:
+  port: 8184
+
+spring:
+  application:
+    name: dfs-a-app
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server-app:8761/eureka/ 
+  instance:
+    preferIpAddress: false 
