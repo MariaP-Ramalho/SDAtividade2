@@ -1,5 +1,8 @@
 package br.ucsal.ispserverapp.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ucsal.ispserverapp.viewmodels.ProfileRequestDTO;
 import br.ucsal.ispserverapp.viewmodels.ProfileResponseDTO;
+import br.ucsal.ispserverapp.viewmodels.SaveFileRequestDTO;
 import br.ucsal.ispserverapp.viewmodels.ValidacaoRequestDTO;
 import br.ucsal.ispserverapp.viewmodels.ValidacaoResponseDTO;
 
@@ -97,10 +101,23 @@ public class IspServerController {
             throw new Exception("Apenas arquivos do tipo .txt são aceitos (fileType: "+file.getContentType()+")");
         }
 
-        byte[] bytes = file.getBytes();
-        Path path = Paths.get(file.getOriginalFilename());
-        Files.write(path, bytes);
-        return new ResponseEntity<>("File received with success, file: "+path.getFileName()+" and fileName: "+fileName, HttpStatus.OK);
+        var responseJson = restTemplate.getForObject(registryUrl, String.class);
+
+        if (responseJson == null || responseJson.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Registry response is empty");
+        }
+
+        var instanceUrl = findInstanceUrl(responseJson, "PERFIL-APP");
+
+        instanceUrl += "salvarArquivo";
+        System.out.println("[REDIRECTING] to target URL: " + instanceUrl);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        var convertedFile = convertMultipartFileToFile(file);
+        var requestBody = new SaveFileRequestDTO(convertedFile, fileName);
+        ResponseEntity<String> response = restTemplate.postForEntity(instanceUrl, requestBody, String.class);
+        return response;
     }
 
     private String findInstanceUrl(String responseJson, String appName)
@@ -126,5 +143,14 @@ public class IspServerController {
         }
 
         throw new RuntimeException("[ERROR] Application not found: " + appName);
+    }
+
+
+    public static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
+        File file = new File("converted_" + multipartFile.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(multipartFile.getBytes());
+        fos.close();
+        return file;
     }
 }

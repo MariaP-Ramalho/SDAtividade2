@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ucsal.perfilapp.services.IProfileService;
 import br.ucsal.perfilapp.viewmodels.NotFoundResponseDTO;
 import br.ucsal.perfilapp.viewmodels.ProfileRequestDTO;
+import br.ucsal.perfilapp.viewmodels.SaveFileRequestDTO;
 
 @RestController
 public class PerfilController {
@@ -35,5 +36,10 @@ public class PerfilController {
         }
 
         return ResponseEntity.ok(responseDTO);
+    }
+
+    @PostMapping("/salvarArquivo")
+    public ResponseEntity<?> saveFile(@RequestBody SaveFileRequestDTO dto) {
+        return ResponseEntity.ok("Chegou o arquivo (file: "+dto.getFile().getName()+") e o nome do arquivo (fileName: "+dto.getFileName()+")");
     }
 }
