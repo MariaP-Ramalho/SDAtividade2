@@ -1,0 +1,128 @@
+services:
+  eureka-server-app:
+    container_name: eureka-server-app
+    build:
+      context: SD-trabalho-2/eureka-server-app
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+    environment:
+      - spring.aplication.name=eureka-server-app
+      - eureka.client.registerWithEureka=false
+      - eureka.client.fetchRegistry=false
+      - eureka.server.waitTimeInMsWhenSyncEmpty=0
+
+  perfil-app:
+    container_name: perfil-app
+    build:
+      context: SD-trabalho-2/perfil-app
+      dockerfile: Dockerfile
+    ports:
+      - "8181:8181"
+    depends_on:
+      - eureka-server-app
+      - dfs-a-app
+      - dfs-b-app
+      - dfs-master-app
+    networks:
+      - app-network
+    environment:
+    - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+
+  validacao-app:
+    container_name: validacao-app
+    build:
+      context: SD-trabalho-2/validacao-app
+      dockerfile: Dockerfile
+    ports:
+      - "8182:8182"
+    depends_on:
+      - eureka-server-app
+      - dfs-a-app
+      - dfs-b-app
+      - dfs-master-app
+    networks:
+      - app-network
+    environment:
+    - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+
+  dns-server-app:
+    container_name: dns-server-app
+    build:
+      context: SD-trabalho-2/dns-server-app
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+    depends_on:
+      - eureka-server-app
+      - perfil-app
+      - validacao-app
+    environment:
+    - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+
+  isp-server-app:
+    container_name: isp-server-app
+    build:
+      context: SD-trabalho-2/isp-server-app
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    depends_on:
+      - eureka-server-app
+      - dns-server-app
+      - perfil-app
+      - validacao-app
+    environment:
+    - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+
+  dfs-master-app:
+    container_name: dfs-master-app
+    build:
+      context: SD-trabalho-2/dfs-master-app
+      dockerfile: Dockerfile
+    ports:
+      - "8183:8183"
+    depends_on:
+      - eureka-server-app
+    networks:
+      - app-network
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+  
+  dfs-a-app:
+    container_name: dfs-a-app
+    build:
+      context: SD-trabalho-2/dfs-a-app
+      dockerfile: Dockerfile
+    ports:
+      - "8184:8184"
+    depends_on:
+      - eureka-server-app
+    networks:
+      - app-network
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+  
+  dfs-b-app:
+    container_name: dfs-b-app
+    build:
+      context: SD-trabalho-2/dfs-b-app
+      dockerfile: Dockerfile
+    ports:
+      - "8185:8185"
+    depends_on:
+      - eureka-server-app
+    networks:
+      - app-network
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+
+networks: 
+  app-network:
+    driver: bridge

@@ -1,9 +1,9 @@
 server:
-  port: 8182
+  port: 8184
 
 spring:
   application:
-    name: validacao-app
+    name: dfs-a-app
 
 eureka:
   client:

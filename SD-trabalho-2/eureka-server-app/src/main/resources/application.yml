@@ -1,7 +1,5 @@
-# application.yml
-
 server:
-  port: 8761 # or your preferred port
+  port: 8761 
 
 spring:
   application:

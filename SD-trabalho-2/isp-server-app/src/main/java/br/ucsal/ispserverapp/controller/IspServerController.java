@@ -21,7 +21,7 @@ import br.ucsal.ispserverapp.viewmodels.ValidacaoResponseDTO;
 public class IspServerController {
 
     private final RestTemplate restTemplate;
-    private final String registryUrl = "http://localhost:8081/getRegisteredApplications";
+    private final String registryUrl = "http://dns-server-app:8081/getRegisteredApplications";
 
     public IspServerController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -86,7 +86,6 @@ public ResponseEntity<?> handleValidationRequest(@RequestBody ValidacaoRequestDT
                         instanceUrl = "http://" + instanceUrl;
                     }
 
-                    //System.out.println("Resolved Instance URL: " + instanceUrl);
                     return instanceUrl;
                 }
             }
