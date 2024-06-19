@@ -86,6 +86,10 @@ public class IspServerController {
             throw new Exception("É necessário informar na rota um nome para o arquivo: '/perfil/salvarArquivo/{fileName}'.");
         }
 
+        if (!fileName.matches("^perfis_v\\d+\\.txt$")) {
+            throw new Exception("O nome do arquivo deve ser perfis_vNumber.txt (ex.: perfis_v1.txt)");
+        }
+        
         if (file == null || file.isEmpty()) {
             throw new Exception("É necessário enviar um arquivo não vazio do tipo .txt");
         }
