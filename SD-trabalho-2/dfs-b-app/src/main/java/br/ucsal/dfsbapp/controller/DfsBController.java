@@ -6,10 +6,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ucsal.dfsbapp.services.*;
 import br.ucsal.dfsbapp.viewmodels.*;
 
 @RestController
 public class DfsBController {
+
+    private IFileService fileService;
+
+    public DfsBController(IFileService fileService) {
+        this.fileService = fileService;
+    }
 
     @GetMapping("/health")
     public String healthy() {
