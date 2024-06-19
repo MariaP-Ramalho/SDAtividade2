@@ -43,7 +43,7 @@ public class PerfilController {
     @PostMapping("/salvarArquivo")
     public ResponseEntity<?> saveFile(@RequestBody SaveFileRequestDTO dto) {
         
-        var url = dfsUrl += "/salvarArquivo";
+        var url = dfsUrl + "/salvarArquivo";
         System.out.println("[PERFIL-APP][REDIRECTING] to target URL: " + url);
         var responseEntity = restTemplate.postForObject(url, dto, String.class);
         return ResponseEntity.ok(responseEntity);
