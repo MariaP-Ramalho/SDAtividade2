@@ -1,4 +1,4 @@
-package br.ucsal.perfilapp.viewmodels;
+package br.ucsal.dfsaapp.viewmodels;
 
 import java.io.File;
 

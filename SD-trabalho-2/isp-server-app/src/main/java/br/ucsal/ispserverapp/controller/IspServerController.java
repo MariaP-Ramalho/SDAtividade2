@@ -3,9 +3,6 @@ package br.ucsal.ispserverapp.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +19,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.ucsal.ispserverapp.viewmodels.ProfileRequestDTO;
-import br.ucsal.ispserverapp.viewmodels.ProfileResponseDTO;
-import br.ucsal.ispserverapp.viewmodels.SaveFileRequestDTO;
-import br.ucsal.ispserverapp.viewmodels.ValidacaoRequestDTO;
-import br.ucsal.ispserverapp.viewmodels.ValidacaoResponseDTO;
+import br.ucsal.ispserverapp.viewmodels.*;
 
 @RestController
 public class IspServerController {
@@ -54,7 +47,7 @@ public class IspServerController {
         }
 
         instanceUrl += "perfil";
-        System.out.println("[REDIRECTING] to target URL: " + instanceUrl);
+        System.out.println("[ISP-SERVER][REDIRECTING] to target URL: " + instanceUrl);
 
         ProfileResponseDTO responseEntity = restTemplate.postForObject(instanceUrl, requestBody,
                 ProfileResponseDTO.class);
@@ -77,7 +70,7 @@ public class IspServerController {
         }
 
         instanceUrl += "validacao";
-        System.out.println("[REDIRECTING] to target URL: " + instanceUrl);
+        System.out.println("[ISP-SERVER][REDIRECTING] to target URL: " + instanceUrl);
 
         ValidacaoResponseDTO responseEntity = restTemplate.postForObject(instanceUrl, requestBody,
                 ValidacaoResponseDTO.class);
@@ -110,7 +103,7 @@ public class IspServerController {
         var instanceUrl = findInstanceUrl(responseJson, "PERFIL-APP");
 
         instanceUrl += "salvarArquivo";
-        System.out.println("[REDIRECTING] to target URL: " + instanceUrl);
+        System.out.println("[ISP-SERVER][REDIRECTING] to target URL: " + instanceUrl);
 
         RestTemplate restTemplate = new RestTemplate();
 
