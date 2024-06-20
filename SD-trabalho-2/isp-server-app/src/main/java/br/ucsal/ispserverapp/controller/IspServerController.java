@@ -3,6 +3,7 @@ package br.ucsal.ispserverapp.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -82,20 +83,21 @@ public class IspServerController {
             @RequestPart("file") MultipartFile file,
             @PathVariable("fileName") String fileName) throws Exception {
 
-        if(fileName == null || fileName.isBlank()) {
-            throw new Exception("É necessário informar na rota um nome para o arquivo: '/perfil/salvarArquivo/{fileName}'.");
+        if (fileName == null || fileName.isBlank()) {
+            throw new Exception(
+                    "É necessário informar na rota um nome para o arquivo: '/perfil/salvarArquivo/{fileName}'.");
         }
 
         if (!fileName.matches("^perfis_v\\d+\\.txt$")) {
             throw new Exception("O nome do arquivo deve ser perfis_vNumber.txt (ex.: perfis_v1.txt)");
         }
-        
+
         if (file == null || file.isEmpty()) {
             throw new Exception("É necessário enviar um arquivo não vazio do tipo .txt");
         }
 
         if (!"text/plain".equals(file.getContentType())) {
-            throw new Exception("Apenas arquivos do tipo .txt são aceitos (fileType: "+file.getContentType()+")");
+            throw new Exception("Apenas arquivos do tipo .txt são aceitos (fileType: " + file.getContentType() + ")");
         }
 
         var responseJson = restTemplate.getForObject(registryUrl, String.class);
@@ -142,12 +144,11 @@ public class IspServerController {
         throw new RuntimeException("[ERROR] Application not found: " + appName);
     }
 
-
     public static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
-        File file = new File("converted_" + multipartFile.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(multipartFile.getBytes());
-        fos.close();
+        File file = new File("/app/InputFiles/" + multipartFile.getName());
+        try (OutputStream outputStream = new FileOutputStream(file)) {
+            outputStream.write(multipartFile.getBytes());
+        }
         return file;
     }
 }
