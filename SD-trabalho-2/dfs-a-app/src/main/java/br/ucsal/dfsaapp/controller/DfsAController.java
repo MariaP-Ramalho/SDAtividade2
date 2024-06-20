@@ -25,7 +25,7 @@ public class DfsAController {
 
     @PostMapping("/salvarArquivo")
     public ResponseEntity<?> saveFile(@RequestBody SaveFileRequestDTO dto) {
-        fileService.saveFile(dto);
-        return ResponseEntity.ok("Chegou no App A (file: "+dto.getFile().getName()+" / fileName: "+dto.getFileName()+")");
+        var response = fileService.saveFile(dto);
+        return ResponseEntity.ok(response);
     }
 }

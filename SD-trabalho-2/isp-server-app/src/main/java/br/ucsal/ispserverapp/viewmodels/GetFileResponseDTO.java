@@ -1,0 +1,38 @@
+package br.ucsal.dfsaapp.viewmodels;
+
+import java.io.File;
+
+public class GetFileResponseDTO {
+
+    private String originApp;
+    private String fileName;
+    private File file;
+
+    public GetFileResponseDTO() {
+        super();
+    }
+    
+    public String getOriginApp() {
+        return originApp;
+    }
+
+    public void setOriginApp(String originApp) {
+        this.originApp = originApp;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+}

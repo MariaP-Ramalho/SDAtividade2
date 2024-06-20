@@ -38,7 +38,7 @@ public class DfsMasterController {
         var url = getRandomUrl();
         url += "/salvarArquivo";
         System.out.println("[DFS-MASTER][REDIRECTING] to target URL: " + url);
-        var responseEntity = restTemplate.postForObject(url, dto, String.class);
+        var responseEntity = restTemplate.postForObject(url, dto, SaveFileResponseDTO.class);
         return ResponseEntity.ok(responseEntity);
     }
 

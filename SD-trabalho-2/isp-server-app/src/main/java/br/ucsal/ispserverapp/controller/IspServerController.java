@@ -79,7 +79,7 @@ public class IspServerController {
     }
 
     @PostMapping(value = "/perfil/salvarArquivo/{fileName}")
-    public ResponseEntity<String> uploadFile(
+    public ResponseEntity<?> uploadFile(
             @RequestPart("file") MultipartFile file,
             @PathVariable("fileName") String fileName) throws Exception {
 
@@ -115,7 +115,7 @@ public class IspServerController {
 
         var convertedFile = convertMultipartFileToFile(file);
         var requestBody = new SaveFileRequestDTO(convertedFile, fileName);
-        ResponseEntity<String> response = restTemplate.postForEntity(instanceUrl, requestBody, String.class);
+        ResponseEntity<SaveFileResponseDTO> response = restTemplate.postForEntity(instanceUrl, requestBody, SaveFileResponseDTO.class);
         return response;
     }
 
@@ -145,7 +145,7 @@ public class IspServerController {
     }
 
     public static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
-        File file = new File("/app/InputFiles/" + multipartFile.getName());
+        File file = new File("/app/InputFiles/" + multipartFile.getOriginalFilename());
         try (OutputStream outputStream = new FileOutputStream(file)) {
             outputStream.write(multipartFile.getBytes());
         }
