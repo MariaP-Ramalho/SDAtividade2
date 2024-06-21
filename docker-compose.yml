@@ -79,7 +79,9 @@ services:
       - perfil-app
       - validacao-app
     environment:
-    - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+    volumes:
+      - C:\Volumes\SD-trabalho-2\InputFiles:/app/InputFiles
 
   dfs-master-app:
     container_name: dfs-master-app
@@ -108,6 +110,9 @@ services:
       - app-network
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+    volumes:
+      - C:\Volumes\SD-trabalho-2\ProfileVersions:/app/ProfileVersions
+      - C:\Volumes\SD-trabalho-2\InputFiles:/app/InputFiles
   
   dfs-b-app:
     container_name: dfs-b-app
@@ -122,6 +127,9 @@ services:
       - app-network
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
+    volumes:
+      - C:\Volumes\SD-trabalho-2\ProfileVersions:/app/ProfileVersions
+      - C:\Volumes\SD-trabalho-2\InputFiles:/app/InputFiles
 
 networks: 
   app-network:

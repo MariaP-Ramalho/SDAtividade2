@@ -6,18 +6,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
-import br.ucsal.perfilapp.services.IProfileService;
-import br.ucsal.perfilapp.viewmodels.NotFoundResponseDTO;
-import br.ucsal.perfilapp.viewmodels.ProfileRequestDTO;
+import br.ucsal.perfilapp.services.*;
+import br.ucsal.perfilapp.viewmodels.*;
 
 @RestController
 public class PerfilController {
 
+    private String dfsUrl = "http://dfs-master-app:8183";
+    private final RestTemplate restTemplate;
     private final IProfileService service;
 
-    public PerfilController(IProfileService service) {
+    public PerfilController(IProfileService service, RestTemplate restTemplate) {
         this.service = service;
+        this.restTemplate = restTemplate;
     }
     
     @GetMapping("/health")
@@ -35,5 +38,14 @@ public class PerfilController {
         }
 
         return ResponseEntity.ok(responseDTO);
+    }
+
+    @PostMapping("/salvarArquivo")
+    public ResponseEntity<?> saveFile(@RequestBody SaveFileRequestDTO dto) {
+        
+        var url = dfsUrl + "/salvarArquivo";
+        System.out.println("[PERFIL-APP][REDIRECTING] to target URL: " + url);
+        var responseEntity = restTemplate.postForObject(url, dto, String.class);
+        return ResponseEntity.ok(responseEntity);
     }
 }
