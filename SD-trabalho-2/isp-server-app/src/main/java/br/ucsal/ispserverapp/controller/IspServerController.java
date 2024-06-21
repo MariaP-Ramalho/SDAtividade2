@@ -7,11 +7,7 @@ import java.io.OutputStream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -116,6 +112,38 @@ public class IspServerController {
         var convertedFile = convertMultipartFileToFile(file);
         var requestBody = new SaveFileRequestDTO(convertedFile, fileName);
         ResponseEntity<SaveFileResponseDTO> response = restTemplate.postForEntity(instanceUrl, requestBody, SaveFileResponseDTO.class);
+        return response;
+    }
+
+    @GetMapping(value = "/perfil/obterArquivo/{fileName}")
+    public ResponseEntity<?> getFile(
+            @PathVariable("fileName") String fileName) throws Exception {
+
+        if (fileName == null || fileName.isBlank()) {
+            throw new Exception(
+                    "É necessário informar na rota um nome para o arquivo: '/perfil/salvarArquivo/{fileName}'.");
+        }
+
+        if (!fileName.matches("^perfis_v\\d+\\.txt$")) {
+            throw new Exception("O nome do arquivo deve ser perfis_vNumber.txt (ex.: perfis_v1.txt)");
+        }
+
+        var responseJson = restTemplate.getForObject(registryUrl, String.class);
+
+        if (responseJson == null || responseJson.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Registry response is empty");
+        }
+
+        var instanceUrl = findInstanceUrl(responseJson, "PERFIL-APP");
+
+        instanceUrl += "obterArquivo";
+        System.out.println("[ISP-SERVER][REDIRECTING] to target URL: " + instanceUrl);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        var requestBody = new GetFileRequestDTO(fileName);
+
+        ResponseEntity<GetFileResponseDTO> response = restTemplate.postForEntity(instanceUrl, requestBody, GetFileResponseDTO.class);
         return response;
     }
 

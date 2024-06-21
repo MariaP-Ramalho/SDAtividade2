@@ -28,4 +28,10 @@ public class DfsAController {
         var response = fileService.saveFile(dto);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/obterArquivo")
+    public ResponseEntity<?> getFile(@RequestBody GetFileRequestDTO dto) {
+        var response = fileService.getFile(dto);
+        return ResponseEntity.ok(response);
+    }
 }

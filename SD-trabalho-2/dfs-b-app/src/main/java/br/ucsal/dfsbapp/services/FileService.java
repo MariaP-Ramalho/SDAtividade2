@@ -42,8 +42,9 @@ public class FileService implements IFileService {
         }
     }
 
+
     @Override
     public GetFileResponseDTO getFile(GetFileRequestDTO dto) {
-        throw new UnsupportedOperationException("Unimplemented method 'getFile'");
+        return new GetFileResponseDTO(dto.getFileName(), "App B");
     }
 }

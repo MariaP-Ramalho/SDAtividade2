@@ -42,6 +42,16 @@ public class DfsMasterController {
         return ResponseEntity.ok(responseEntity);
     }
 
+    @PostMapping("/obterArquivo")
+    public ResponseEntity<?> getFile(@RequestBody GetFileRequestDTO dto) {
+
+        var url = getRandomUrl();
+        url += "/obterArquivo";
+        System.out.println("[DFS-MASTER][REDIRECTING] to target URL: " + url);
+        var responseEntity = restTemplate.postForObject(url, dto, GetFileResponseDTO.class);
+        return ResponseEntity.ok(responseEntity);
+    }
+
     private String getRandomUrl() {
         var randomUrlPosition = rd.nextInt(dfUrl.size());
         return dfUrl.get(randomUrlPosition);
