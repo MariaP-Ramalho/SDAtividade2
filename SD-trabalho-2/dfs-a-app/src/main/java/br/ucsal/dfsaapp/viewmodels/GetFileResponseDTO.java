@@ -11,6 +11,12 @@ public class GetFileResponseDTO {
     public GetFileResponseDTO() {
         super();
     }
+
+    public GetFileResponseDTO(String fileName, String originApp){
+        this.fileName = fileName;
+        this.originApp = originApp;
+    }
+
     
     public String getOriginApp() {
         return originApp;

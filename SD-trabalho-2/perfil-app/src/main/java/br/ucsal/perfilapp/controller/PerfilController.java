@@ -48,4 +48,14 @@ public class PerfilController {
         var responseEntity = restTemplate.postForObject(url, dto, String.class);
         return ResponseEntity.ok(responseEntity);
     }
+
+    @PostMapping("/obterArquivo")
+    public ResponseEntity<?> getFile(@RequestBody GetFileRequestDTO dto) {
+
+        var url = dfsUrl + "/obterArquivo";
+        System.out.println("[PERFIL-APP][REDIRECTING] to target URL: " + url);
+        var responseEntity = restTemplate.postForObject(url, dto, GetFileResponseDTO.class);
+        return ResponseEntity.ok(responseEntity);
+    }
+
 }

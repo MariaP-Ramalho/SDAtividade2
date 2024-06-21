@@ -2,22 +2,16 @@ package br.ucsal.ispserverapp.viewmodels;
 
 import java.io.File;
 
-public class GetFileResponseDTO {
+public class GetFileRequestDTO {
 
-    private String originApp;
     private String fileName;
     private File file;
 
-    public GetFileResponseDTO() {
+    public GetFileRequestDTO() {
         super();
     }
-    
-    public String getOriginApp() {
-        return originApp;
-    }
-
-    public void setOriginApp(String originApp) {
-        this.originApp = originApp;
+    public GetFileRequestDTO(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getFileName() {
