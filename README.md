@@ -10,8 +10,8 @@ Além disso, a integração de componentes como DNS (Domain Name System), ISP (I
 a experiência, permitindo a exploração de conceitos essenciais, como descoberta de serviços, roteamento inteligente de solicitações
 e comunicação entre componentes distribuídos para validação e recuperação de perfis de usuário.
 
-<br>![Diagram](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/bb011d01-d703-4110-91c2-93bf90f3f621)
-<!--Excalidraw: https://excalidraw.com/#json=9Dvb07mGXfhT5CZpdBmfs,jOlULBawkJB7Sm9nGcRFAQ-->
+<br>![image](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/003ee498-a867-4f16-85f3-4adedf669b85)
+<!--Excalidraw: https://excalidraw.com/#json=Rr-a-rnaVy8Mh2fdP7_Fw,7YpgBqaOqjFu3wSP_Sd_Kg-->
 
 
 --- 
