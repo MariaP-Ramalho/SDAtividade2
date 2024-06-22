@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +24,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.ucsal.ispserverapp.BadRequestException;
 import br.ucsal.ispserverapp.viewmodels.*;
+import jakarta.ws.rs.ClientErrorException;
 
 @RestController
 public class IspServerController {
@@ -86,20 +90,21 @@ public class IspServerController {
             @PathVariable("fileName") String fileName) throws Exception {
 
         if (fileName == null || fileName.isBlank()) {
-            throw new Exception(
+            throw new BadRequestException(
                     "É necessário informar na rota um nome para o arquivo: '/perfil/salvarArquivo/{fileName}'.");
         }
 
         if (!fileName.matches("^perfis_v\\d+\\.txt$")) {
-            throw new Exception("O nome do arquivo deve ser perfis_vNumber.txt (ex.: perfis_v1.txt)");
+            throw new BadRequestException("O nome do arquivo deve ser perfis_vNumber.txt (ex.: perfis_v1.txt)");
         }
 
         if (file == null || file.isEmpty()) {
-            throw new Exception("É necessário enviar um arquivo não vazio do tipo .txt");
+            throw new BadRequestException("É necessário enviar um arquivo não vazio do tipo .txt");
         }
 
         if (!"text/plain".equals(file.getContentType())) {
-            throw new Exception("Apenas arquivos do tipo .txt são aceitos (fileType: " + file.getContentType() + ")");
+            throw new BadRequestException(
+                    "Apenas arquivos do tipo .txt são aceitos (fileType: " + file.getContentType() + ")");
         }
 
         var responseJson = restTemplate.getForObject(registryUrl, String.class);
@@ -117,51 +122,57 @@ public class IspServerController {
 
         var convertedFile = convertMultipartFileToFile(file);
         var requestBody = new SaveFileRequestDTO(convertedFile, fileName);
-        ResponseEntity<SaveFileResponseDTO> response = restTemplate.postForEntity(instanceUrl, requestBody, SaveFileResponseDTO.class);
-        return response;
+        ResponseEntity<SaveFileResponseDTO> response = restTemplate.postForEntity(instanceUrl, requestBody,SaveFileResponseDTO.class);
+        
+        URI location = new URI("C:/Volumes/SD-trabalho-2/ProfileVersions/" + fileName);
+        return ResponseEntity.created(location)
+                .body(response.getBody());
     }
 
     @GetMapping(value = "/perfil/obterArquivo/{fileName}")
     public ResponseEntity<Resource> getFile(@PathVariable("fileName") String fileName) throws Exception {
 
-    if (fileName == null || fileName.isBlank()) {
-        throw new Exception("É necessário informar na rota um nome para o arquivo: '/perfil/obterArquivo/{fileName}'.");
+        if (fileName == null || fileName.isBlank()) {
+            throw new BadRequestException(
+                    "É necessário informar na rota um nome para o arquivo: '/perfil/obterArquivo/{fileName}'.");
+        }
+
+        if (!fileName.matches("^perfis_v\\d+\\.txt$")) {
+            throw new BadRequestException("O nome do arquivo deve ser perfis_vNumber.txt (ex.: perfis_v1.txt)");
+        }
+
+        var responseJson = restTemplate.getForObject(registryUrl, String.class);
+
+        if (responseJson == null || responseJson.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+        var instanceUrl = findInstanceUrl(responseJson, "PERFIL-APP");
+
+        instanceUrl += "obterArquivo";
+        System.out.println("[ISP-SERVER][REDIRECTING] to target URL: " + instanceUrl);
+
+        RestTemplate restTemplate = new RestTemplate();
+        var requestBody = new GetFileRequestDTO(fileName);
+
+        ResponseEntity<GetFileResponseDTO> response = restTemplate.postForEntity(instanceUrl, requestBody,
+                GetFileResponseDTO.class);
+
+        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null
+                && response.getBody().getFile() != null) {
+
+            File file = response.getBody().getFile();
+            Path filePath = file.toPath();
+            Resource resource = new FileSystemResource(filePath);
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
+                    .body(resource);
+        } else {
+            throw new IllegalArgumentException("Arquivo não encontrado ou não disponível para download.");
+        }
     }
-
-    if (!fileName.matches("^perfis_v\\d+\\.txt$")) {
-        throw new Exception("O nome do arquivo deve ser perfis_vNumber.txt (ex.: perfis_v1.txt)");
-    }
-
-    var responseJson = restTemplate.getForObject(registryUrl, String.class);
-
-    if (responseJson == null || responseJson.isEmpty()) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-    }
-
-    var instanceUrl = findInstanceUrl(responseJson, "PERFIL-APP");
-
-    instanceUrl += "obterArquivo";
-    System.out.println("[ISP-SERVER][REDIRECTING] to target URL: " + instanceUrl);
-
-    RestTemplate restTemplate = new RestTemplate();
-    var requestBody = new GetFileRequestDTO(fileName);
-
-    ResponseEntity<GetFileResponseDTO> response = restTemplate.postForEntity(instanceUrl, requestBody, GetFileResponseDTO.class);
-
-    if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null && response.getBody().getFile() != null) {
-        File file = response.getBody().getFile();
-        Path filePath = file.toPath();
-        Resource resource = new FileSystemResource(filePath);
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
-                .body(resource);
-    } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    }
-}
-
 
     private String findInstanceUrl(String responseJson, String appName)
             throws JsonMappingException, JsonProcessingException {

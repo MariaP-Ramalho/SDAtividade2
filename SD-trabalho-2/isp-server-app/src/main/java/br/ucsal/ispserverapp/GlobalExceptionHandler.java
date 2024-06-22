@@ -25,4 +25,18 @@ public class GlobalExceptionHandler {
         var errorMessage = new ErrorResponseDTO(statusCode, ex.getMessage());
         return ResponseEntity.status(statusCode).body(errorMessage);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponseDTO> handleNotFoundException(Exception ex) {
+        var statusCode = HttpStatus.NOT_FOUND;
+        var errorMessage = new ErrorResponseDTO(statusCode, ex.getMessage());
+        return ResponseEntity.status(statusCode).body(errorMessage);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponseDTO> handleBadRequestException(Exception ex) {
+        var statusCode = HttpStatus.BAD_REQUEST;
+        var errorMessage = new ErrorResponseDTO(statusCode, ex.getMessage());
+        return ResponseEntity.status(statusCode).body(errorMessage);
+    }
 }
