@@ -49,20 +49,20 @@ http://localhost:8080/perfil/salvarArquivo
 ```
 
 ### Sucesso (`Created`)
-![salvar-sucesso-ezgif com-video-to-gif-converter](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/4c65774a-aab1-4e8d-9cc8-f263244f3603)
+![salvar-sucesso](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/5dbbf290-eb6e-42dc-a8a9-406cd941a908)
 
 ### Erros
 #### Nome inválido (HTTP `BadRequest`)
-![salvar-badrequestnomeinvalido-ezgif com-video-to-gif-converter](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/96b9453f-e8ff-46fa-a69f-d2d848c0fbf9)
+![salvar-bad-request-nome-invalido](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/67049b4e-4c5c-4495-8b9f-46d792a5814d)
 
 #### Arquivo vazio (HTTP `BadRequest`)
-![salvar-badrequesttxtvazio-ezgif com-video-to-gif-converter](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/38279cf3-dc23-4488-a3f1-d0d7ec262264)
+![salvar-bad-request-txt-vazio](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/6df1a97e-a613-4ea8-ab1f-40a9096ffb88)
 
 #### Tipo de arquivo inválido (HTTP `BadRequest`)
-![salvar-badrequestpdf-ezgif com-video-to-gif-converter](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/9b95c089-646f-4420-a938-70f2e82f6107)
+![salvar-bad-request-pdf](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/69564531-ccfc-46b0-bd97-ba4043be8723)
 
 #### Já existe arquivo com mesmo nome (HTTP `Unprocessable Entity`)
-![salvar-errounprocessableentity-ezgif com-video-to-gif-converter](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/55e8275f-6e33-4bdd-b40e-7231ac30e2ae)
+![salvar-erro-unprocessable-entity](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/3ca0796e-f1db-47f3-bc45-17ded5ee4a87)
 
 ## **Rota de Obter Arquivo** (POST)
 
@@ -74,15 +74,15 @@ http://localhost:8080/perfil/obterArquivo
 ```
 
 ### Sucesso (HTTP `Ok`)
-![obter - sucesso](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/d7a26e55-772a-497e-aad7-43d69d2fe28d)
+![obter-sucesso](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/8d889822-b1b7-4018-b5b6-db18cef06838)
 
 ### Erros
 
-#### Erro não encontrado (HTTP `NotFound`)
-![obter-arquivonotfound-ezgif com-video-to-gif-converter](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/12716fc2-8415-4ea7-93e0-3fa72b59d1e1)
+#### Erro arquivo não encontrado (HTTP `NotFound`)
+![obter-arquivo-not-found](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/8f7b823a-b2f8-45c3-aab9-f152ff80a945)
 
 ### Erro nome inválido
-![obter - nome invalido](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/96f2bb01-c25d-4d18-af2f-66b23af0f537)
+![obter-erro-nome-invalido](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/9ed32db6-246f-466c-94bb-fb508a2e716f)
 
 ## **Rota de Perfil** (POST)
 
