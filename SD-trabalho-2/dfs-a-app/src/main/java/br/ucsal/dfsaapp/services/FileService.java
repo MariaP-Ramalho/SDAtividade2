@@ -29,7 +29,7 @@ public class FileService implements IFileService {
 
             if (Files.exists(outputFile)) {
                 System.out.println("[DFS-A-APP] File " + outputFile + " already exists.");
-                return new SaveFileResponseDTO(null, false);
+                return new SaveFileResponseDTO("[ERRO] arquivo com o nome `"+outputFile+"`já existe", false);
             } else {
                 Files.copy(inputFile.toPath(), outputFile);
                 System.out.println("[DFS-A-APP] File saved to: " + outputFile);
@@ -38,7 +38,7 @@ public class FileService implements IFileService {
         } catch (IOException e) {
             System.err.println("[DFS-A-APP] Failed to save file: " + e.getMessage());
             e.printStackTrace();
-            return new SaveFileResponseDTO(null, false);
+            return new SaveFileResponseDTO("[ERRO] erro interno", false);
         }
     }
 

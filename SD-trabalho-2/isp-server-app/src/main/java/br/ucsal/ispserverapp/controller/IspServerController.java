@@ -122,10 +122,16 @@ public class IspServerController {
 
         var convertedFile = convertMultipartFileToFile(file);
         var requestBody = new SaveFileRequestDTO(convertedFile, fileName);
-        ResponseEntity<SaveFileResponseDTO> response = restTemplate.postForEntity(instanceUrl, requestBody,SaveFileResponseDTO.class);
-        
-        URI location = new URI("C:/Volumes/SD-trabalho-2/ProfileVersions/" + fileName);
-        return ResponseEntity.created(location)
+        ResponseEntity<SaveFileResponseDTO> response = restTemplate.postForEntity(instanceUrl, requestBody,
+                SaveFileResponseDTO.class);
+
+        if (response.getBody().isSuccess()) {
+            URI location = new URI("C:/Volumes/SD-trabalho-2/ProfileVersions/" + fileName);
+            return ResponseEntity.created(location)
+                    .body(response.getBody());
+        }
+
+        return ResponseEntity.unprocessableEntity()
                 .body(response.getBody());
     }
 
