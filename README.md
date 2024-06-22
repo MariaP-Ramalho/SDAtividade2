@@ -1,6 +1,6 @@
 <div align="center">
 
- # Sistemas Distribuídos com Eureka, DNS e ISP servers 
+# Sistemas Distribuídos com Eureka, DNS e ISP servers 
 
 Este projeto abrange uma variedade de aplicativos que servem como exemplos práticos para explorar e compreender 
 os fundamentos do desenvolvimento de sistemas distribuídos. Através da utilização de tecnologias-chave como Eureka Server,
@@ -8,7 +8,7 @@ Spring Boot e Maven, o projeto visa demonstrar como criar, implantar e gerenciar
 
 Além disso, a integração de componentes como DNS (Domain Name System), ISP (Intelligent Service Proxy) e API Rest enriquece
 a experiência, permitindo a exploração de conceitos essenciais, como descoberta de serviços, gerenciamento distribuído de arquivos, roteamento inteligente de solicitações
-e comunicação entre componentes distribuídos para validação e recuperação de perfis de usuário.
+e comunicação entre componentes distribuídos para validação e recuperação de perfis de usuário e arquivos, tudo isso através da orquestração de containers com Docker.
 
 <br>![image](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/003ee498-a867-4f16-85f3-4adedf669b85)
 <!--Excalidraw: https://excalidraw.com/#json=Rr-a-rnaVy8Mh2fdP7_Fw,7YpgBqaOqjFu3wSP_Sd_Kg-->
