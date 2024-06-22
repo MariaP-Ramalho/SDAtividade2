@@ -42,9 +42,20 @@ public class FileService implements IFileService {
         }
     }
 
-
     @Override
     public GetFileResponseDTO getFile(GetFileRequestDTO dto) {
-        return new GetFileResponseDTO(dto.getFileName(), "App B");
+        String fileName = dto.getFileName();
+        Path filePath = Paths.get(outputDirectory, fileName);
+        File file = filePath.toFile();
+
+        if (file.exists() && file.isFile()) {
+            GetFileResponseDTO response = new GetFileResponseDTO(fileName, "App B");
+            response.setFile(file);
+            System.out.println("[DFS-B-APP] File " + filePath + " retrieved successfully.");
+            return response;
+        } else {
+            System.err.println("[DFS-B-APP] File " + filePath + " does not exist or is not a file.");
+            return new GetFileResponseDTO(null, "App B");
+        }
     }
 }

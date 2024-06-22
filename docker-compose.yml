@@ -82,6 +82,7 @@ services:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka-server-app:8761/eureka/
     volumes:
       - C:\Volumes\SD-trabalho-2\InputFiles:/app/InputFiles
+      - C:\Volumes\SD-trabalho-2\ProfileVersions:/app/ProfileVersions
 
   dfs-master-app:
     container_name: dfs-master-app
