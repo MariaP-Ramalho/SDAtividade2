@@ -1,4 +1,4 @@
-package br.ucsal.dfsmasterapp.viewmodels;
+package br.ucsal.perfilapp.viewmodels;
 
 import java.io.File;
 
@@ -9,6 +9,9 @@ public class GetFileRequestDTO {
 
     public GetFileRequestDTO() {
         super();
+    }
+    public GetFileRequestDTO(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getFileName() {
