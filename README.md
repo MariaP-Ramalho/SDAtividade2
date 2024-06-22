@@ -48,7 +48,7 @@ aplicação de perfil (`perfil-app`), que acessa o microsserviço da aplicação
 http://localhost:8080/perfil/salvarArquivo
 ```
 
-### Sucesso (`Created`)
+### Sucesso (HTTP `Created`)
 ![salvar-sucesso](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/5dbbf290-eb6e-42dc-a8a9-406cd941a908)
 
 ### Erros
@@ -81,7 +81,7 @@ http://localhost:8080/perfil/obterArquivo
 #### Erro arquivo não encontrado (HTTP `NotFound`)
 ![obter-arquivo-not-found](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/8f7b823a-b2f8-45c3-aab9-f152ff80a945)
 
-### Erro nome inválido
+### Erro nome inválido (HTTP `BadRequest`)
 ![obter-erro-nome-invalido](https://github.com/MariaP-Ramalho/SDAtividade2/assets/88147887/9ed32db6-246f-466c-94bb-fb508a2e716f)
 
 ## **Rota de Perfil** (POST)
